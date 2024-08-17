@@ -45,6 +45,29 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 .wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
 :where(.wp-block-columns.is-layout-flex){gap: 2em;}
 .wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
+.progress-bar2 {
+width: 100%;
+background-color: #fcb900;
+margin-top: 20px;
+border-radius: 10px;
+overflow: hidden;
+display: none;
+}
+.progress-bar2-inner {
+height: 20px;
+width: 0;
+background-color: #D83200;
+transition: width 0.4s ease;
+}
+.progress-text {
+margin-top: 10px;
+font-size: 1em;
+}
+.speed-text,
+.remaining-time-text {
+margin-top: 5px;
+font-size: 1em;
+}
 </style>
 <link rel='stylesheet' id='fontawesome-css' href='https://RSaied.github.io/JsonTool/css/fontawesome-all.css?ver=1' type='text/css' media='all' />
 <link rel='stylesheet' id='bootstrap-css' href='https://RSaied.github.io/JsonTool/css/bootstrap.css?ver=1' type='text/css' media='all' />
@@ -111,7 +134,7 @@ gtag("config", "G-YJCQ7972NR");
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="#download">تنزيل</a>
+                    <a id="btn-download" class="nav-link page-scroll" href="#download">تنزيل</a>
                 </li>
             </ul>
           
@@ -130,7 +153,7 @@ gtag("config", "G-YJCQ7972NR");
                             <h1 dir="rtl">تطبيق لملفات <span id="js-rotating">Json, Xml</span></h1>
                             <p class="p-large" dir="rtl">أفضل تطبيق لفتح ملفات Json و xml بطريقة جميلة وبنسخته المدفوعة وبدون إعلانات متاح مجانا لأجهزة الأندرويد</p>
                             
-                                                          <a id="btn-download" class="btn-solid-lg page-scroll" href="https://rsaied.github.io/JsonTool/JSON%20Tool%20{V0.24}%20By%20RSaied.github.io.apk" target="_blank" download><i class="fab fa-google-play"></i>تنزيل APK </a>
+                                                          <a id="btn-download" class="btn-solid-lg page-scroll" href="#download" target="_blank" ><i class="fab fa-google-play"></i>تنزيل ملف التطبيق </a>
                                                         
                         </div>
                     </div> <!-- end of col -->
@@ -263,7 +286,12 @@ gtag("config", "G-YJCQ7972NR");
                 <div class="col-lg-6 col-xl-5">
                     <div class="text-container">
                         <h2 dir="rtl">حمل الان تطبيق JSON Tool Premium لأجهزة الاندرويد مجانا</h2>
-                        <a id="btn-download" class="btn-solid-lg" href="https://RSaied.github.io/JsonTool/JSON%20Tool%20{V0.24}%20By%20RSaied.github.io.apk" target="_blank" download><i class="fab fa-google-play"></i>تنزيل APK </a>
+<div class="progress-bar2" id="progress-bar2" dir="rtl">
+<div class="progress-bar2-inner" id="progress-bar2-inner" dir="rtl"></div>
+</div>
+<div class="progress-text" id="progress-text" dir="rtl"></div>
+<div class="speed-text" id="speed-text" dir="rtl"></div>
+<div class="remaining-time-text" id="remaining-time-text" dir="rtl"></div>
                     </div> <!-- end of text-container -->
                 </div> <!-- end of col -->
                
@@ -296,6 +324,6 @@ gtag("config", "G-YJCQ7972NR");
 <script type='text/javascript' src='https://RSaied.github.io/JsonTool/js/morphext.min.js?ver=1' id='morphext-js'></script>
 <script type='text/javascript' src='https://RSaied.github.io/JsonTool/js/validator.min.js?ver=1' id='validator-js'></script>
 <script type='text/javascript' src='https://RSaied.github.io/JsonTool/js/scripts.js?ver=1' id='scripts-js'></script>
-    
+<script type='text/javascript' src='https://RSaied.github.io/JsonTool/js/download.js?ver=1' id='download-js'></script>
 </body>
 </html>
