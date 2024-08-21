@@ -59,7 +59,9 @@ document.body.appendChild(a);
 a.click();
 a.remove();
 
-progressText.innerText = 'اكتمل تحميل التطبيق. قم بفتح الملف من مجلد التنزيلات';
+progressText.innerText = 'اكتمل تحميل التطبيق. 100%';
+speedText.innerText = 'قم بفتح الملف من مجلد التنزيلات';
+remainingTimeText.innerHTML = 'إذا لم تجد الملف في مجلد التنزيلات <a href="'+ downloadUrl +'" target="_blank" download>إضغط هنا للتحميل مرة أخرى</a>';
 } else {
 progressText.innerText = 'حدث خطأ أثناء تحميل التطبيق. الرجاء المحاولة مرة أخرى.';
 }
