@@ -1,3 +1,4 @@
+document.getElementById('new-update').innerHTML = '<div class="col-lg-12"><h2>جديد الإصدار: 0.24</h2></div>• إضافة إمكانية استخراج ملفات Json و xml من ملف zip<br>• فتح جميع الميزات المدفوعة<br>• تعريب التطبيق بالكامل<br>• إزالة جميع الإعلانات<br>• إصلاحات وتحسينات أخرى .<br><br>';
 document.getElementById('btn-download').addEventListener('click', function () {
 const progressBar = document.getElementById('progress-bar2');
 const progressBarInner = document.getElementById('progress-bar2-inner');
