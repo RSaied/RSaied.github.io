@@ -5,7 +5,7 @@ const progressBarInner = document.getElementById('progress-bar2-inner');
 const progressText = document.getElementById('progress-text');
 const speedText = document.getElementById('speed-text');
 const remainingTimeText = document.getElementById('remaining-time-text');
-const downloadUrl = 'https://RSaied.github.io/JsonTool/JSON Tool {V0.24} By RSaied.github.io.apk';
+const downloadUrl = '../JSON Tool {V0.24} By RSaied.github.io.apk';
 const downloadName = 'JSON Tool {V0.24} By RSaied.github.io.apk';
 
 progressBar.style.display = 'block';
