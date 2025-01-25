@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>𝚂 𝙰 𝙸 𝙴 𝙳 | My profile</title>
     <meta name="description" content="🤍 ولك بالمثل يا داعياً لنا أو علينا -" />
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="𝚂 𝙰 𝙸 𝙴 𝙳">
+    <link rel="canonical" href="https://saied.me/profile">
+    <link rel="icon" type="image/jpeg" href="./icon.jpg">
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.rtl.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
@@ -35,6 +39,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth;
         }
         
         body {
@@ -47,9 +52,9 @@
             padding: 2rem 0;
             position: relative;
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* خلفية برمجية متحركة */
         #matrix-bg {
             position: fixed;
             top: 0;
@@ -58,63 +63,64 @@
             height: 100%;
             z-index: -1;
         }
+
         @keyframes scaleIn {
-    from {
-        opacity: 0;
-        transform: scale(1.5);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
+            from {
+                opacity: 0;
+                transform: scale(1.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
 
-@keyframes slideInRight {
-    from {
-        opacity: 0;
-        transform: translateX(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
 
-@keyframes slideInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
 
-@keyframes popIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.3);
-    }
-    50% {
-        opacity: 0.8;
-        transform: scale(1.1);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
 
-.profile-container {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 1rem;
-    animation: scaleIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
+        .profile-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            animation: scaleIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
 
-.profile-card {
+        .profile-card {
             background: var(--card-bg);
             border-radius: 24px;
             padding: 2.5rem;
@@ -130,6 +136,7 @@
             text-align: center;
             margin-bottom: 0.5rem;
         }
+
         .profile-image {
             width: 180px;
             height: 180px;
@@ -138,9 +145,10 @@
             position: relative;
             animation: imageFloat 6s ease-in-out infinite;
         }
-        @keyframes borderRotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+
+        @keyframes imageFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .profile-image img {
@@ -151,10 +159,7 @@
             border: 4px solid var(--card-bg);
             box-shadow: 0 8px 25px rgba(18, 68, 233, 0.2);
         }
-        @keyframes imageFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+
         .profile-image::before {
             content: '';
             position: absolute;
@@ -167,6 +172,11 @@
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             animation: borderRotate 4s linear infinite;
+        }
+
+        @keyframes borderRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .profile-name {
@@ -216,7 +226,7 @@
         .links-section {
             display: grid;
             gap: 1rem;
-            margin-top: 1.5rem; /* إضافة هامش علوي بدلاً من الهامش السفلي للأيقونات */
+            margin-top: 1.5rem;
         }
 
         .link-button {
@@ -246,43 +256,53 @@
             background: linear-gradient(135deg, #10B981, #059669);
         }
 
+        #donationModal .link-button {
+            animation: slideInLeft 0.7s cubic-bezier(0.23, 1, 0.32, 1) backwards;
+            animation-delay: calc(0.5s + (0.5s * 0.5s));
+        }
+
         .link-button.premium {
             background: linear-gradient(135deg, #F59E0B, #D97706);
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 12px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .donation-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .close-modal {
+            color: var(--text-secondary);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from { 
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* تحسينات التجاوب */
         @media (max-width: 768px) {
             .profile-container {
                 padding: 0 1rem;
@@ -346,81 +366,81 @@
     <div class="profile-container">
         <div class="profile-card">
             <div class="profile-header" dir="auto">
-                <div class="profile-image" >
-                    <img src="./icon.jpg" alt="𝚂 𝙰 𝙸 𝙴 𝙳"/>
+                <div class="profile-image">
+                    <img src="./icon.jpg" alt="𝚂 𝙰 𝙸 𝙴 𝙳 Profile Picture"/>
                 </div>
                 <h1 class="profile-name">𝚂 𝙰 𝙸 𝙴 𝙳</h1>
                 <p class="bio-text">🤍 ولك بالمثل يا داعياً لنا أو علينا -</p>
             </div>
 
             <div class="social-icons">
-                <a href="https://www.threads.net/@9saied" target="_blank" class="social-icon">
+                <a href="https://www.threads.net/@9saied" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Threads">
                     <i class="fab fa-threads"></i>
                 </a>
-                <a href="https://www.instagram.com/9saied" target="_blank" class="social-icon">
+                <a href="https://www.instagram.com/9saied" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
                     <i class="fab fa-instagram"></i>
                 </a>
-                <a href="https://x.com/LSa3ed" target="_blank" class="social-icon">
+                <a href="https://x.com/LSa3ed" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="X (Twitter)">
                     <i class="fab fa-x-twitter"></i>
                 </a>
-                <a href="https://t.me/RSaied_Bot" target="_blank" class="social-icon">
+                <a href="https://t.me/RSaied_Bot" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Telegram Bot">
                     <i class="fab fa-telegram"></i>
                 </a>
-                <a href="/Sareh/" class="social-icon">
+                <a href="/Sareh/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Sareh">
                     <i class="fas fa-comments"></i>
                 </a>
-                <a href="https://github.com/RSaied" target="_blank" class="social-icon">
+                <a href="https://github.com/RSaied" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="GitHub">
                     <i class="fab fa-github"></i>
                 </a>
             </div>
 
             <div class="links-section">
-                <a href="/JsonTool/" class="link-button premium">
+                <a href="/JsonTool/" target="_blank" rel="noopener noreferrer" class="link-button premium">
                     <i class="fas fa-file-code"></i>
                     JSON Tool Premium لأجهزة الاندرويد مجانا
                 </a>
                 
-                <a href="/Donate/" class="link-button donate">
+                <a href="#" class="link-button donate" onclick="openDonationModal()">
                     <i class="fas fa-heart"></i>
                     Donate - تبرع
                 </a>
 
-                <a href="https://t.me/Oneillusion" class="link-button">
+                <a href="https://t.me/Oneillusion" target="_blank" rel="noopener noreferrer" class="link-button">
                     <i class="fas fa-pencil-alt"></i>
                     • 💙 illusion - وَهم 💙 •
                 </a>
 
-                <a href="https://t.me/Raa0Raa" class="link-button">
+                <a href="https://t.me/Raa0Raa" target="_blank" rel="noopener noreferrer" class="link-button">
                     <i class="fas fa-edit"></i>
                     • 🌿 رَاء 🌿 •
                 </a>
 
-                <a href="https://t.me/BOTATE" class="link-button">
+                <a href="https://t.me/BOTATE" target="_blank" rel="noopener noreferrer" class="link-button">
                     <i class="fas fa-robot"></i>
                     • 🤖 جديدنا على التيليجرام 🤖 •
                 </a>
 
-                <a href="https://t.me/OneAskim" class="link-button">
+                <a href="https://t.me/OneAskim" target="_blank" rel="noopener noreferrer" class="link-button">
                     <i class="fas fa-heart"></i>
                     • ♥️ Aşkım - عشقي ♥️ •
                 </a>
 
-                <a href="https://t.me/SAEEDFiles" class="link-button">
+                <a href="https://t.me/SAEEDFiles" target="_blank" rel="noopener noreferrer" class="link-button">
                     <i class="fas fa-folder"></i>
                     • 🗂 SAIED Files 🗂 •
                 </a>
 
-                <a href="https://t.me/S0RCH" class="link-button">
+                <a href="https://t.me/S0RCH" target="_blank" rel="noopener noreferrer" class="link-button">
                     <i class="fas fa-mosque"></i>
                     • 🕋 الأدعية والأذكار 🕋 •
                 </a>
 
-                <a href="https://t.me/R0SCH" class="link-button">
+                <a href="https://t.me/R0SCH" target="_blank" rel="noopener noreferrer" class="link-button">
                     <i class="fas fa-quran"></i>
                     • 🕌 آيات القرآن الكريم 🕌 •
                 </a>
 
-                <a href="https://t.me/S5RCH" class="link-button">
+                <a href="https://t.me/S5RCH" target="_blank" rel="noopener noreferrer" class="link-button">
                     <i class="fas fa-clock"></i>
                     • ⏰ مواقيت الصلاة - دمشق ⏰ •
                 </a>
@@ -428,71 +448,114 @@
         </div>
     </div>
 
+    <!-- Donation Modal -->
+    <div id="donationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeDonationModal()">&times;</span>
+            <h2>اختر طريقة التبرع</h2>
+            <div class="donation-options">
+                <a href="https://paypal.me/YourPayPalLink" target="_blank" rel="noopener noreferrer" class="link-button">
+                    <i class="fab fa-paypal"></i>
+                    التبرع عبر PayPal
+                </a>
+                <a href="https://t.me/YourTelegramUsername" target="_blank" rel="noopener noreferrer" class="link-button">
+                    <i class="fab fa-telegram"></i>
+                    التبرع عبر نجوم تيليجرام
+                </a>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // إضافة مؤشرات للأيقونات والأزرار
-document.querySelectorAll('.social-icon').forEach((icon, index) => {
-    icon.style.setProperty('--icon-index', index);
-});
+        // Add indices to social icons and link buttons
+        document.querySelectorAll('.social-icon').forEach((icon, index) => {
+            icon.style.setProperty('--icon-index', index);
+        });
 
-document.querySelectorAll('.link-button').forEach((button, index) => {
-    button.style.setProperty('--button-index', index);
-});
-// خلفية برمجية متحركة
-const canvas = document.getElementById('matrix-bg');
-const ctx = canvas.getContext('2d');
+        document.querySelectorAll('.link-button').forEach((button, index) => {
+            button.style.setProperty('--button-index', index);
+        });
 
-// تعيين حجم الكانفاس
-function setCanvasSize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-setCanvasSize();
-window.addEventListener('resize', setCanvasSize);
+        // Matrix Background Script
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
 
-// تهيئة المتغيرات مع زيادة كثافة الأرقام
-const fontSize = 20; // تصغير حجم الخط لزيادة عدد الأعمدة
-const columns = Math.floor(canvas.width / (fontSize / 2)); // مضاعفة عدد الأعمدة
-const drops = Array(columns).fill(canvas.height); // تعيين نقطة البداية إلى أسفل الشاشة
-const chars = "0123456789".split(""); // زيادة عدد الأرقام المستخدمة
-
-// تعيين الألوان حسب وضع الشاشة
-const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-const primaryColor = isDarkMode ? '#3B82F6' : '#60A5FA';
-const bgColor = isDarkMode ? '#0F172A' : '#F3F4F6';
-
-function draw() {
-    // إضافة شفافية للخلفية لتحسين تأثير المصفوفة
-    ctx.fillStyle = `${bgColor}80`;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = primaryColor;
-    ctx.font = `${fontSize}px monospace`;
-
-    for (let i = 0; i < drops.length; i++) {
-        const char = chars[Math.floor(Math.random() * chars.length)];
-        const x = i * (fontSize / 2);
-        const y = drops[i];
-
-        // إضافة شفافية عشوائية للأحرف
-        ctx.globalAlpha = Math.random() * 0.5 + 0.5;
-        ctx.fillText(char, x, y);
-
-        // إعادة تعيين القطرات بشكل عشوائي
-        if (y > canvas.height) {
-            drops[i] = 0;
+        // Set canvas size
+        function setCanvasSize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         }
-        drops[i] += fontSize;
+        setCanvasSize();
+        window.addEventListener('resize', setCanvasSize);
 
-        // إضافة قطرات عشوائية جديدة
-        if (Math.random() > 0.95) {
-            drops[i] = 0;
+        // Matrix animation variables
+        const fontSize = 20;
+        const columns = Math.floor(canvas.width / (fontSize / 2));
+        const drops = Array(columns).fill(canvas.height);
+        const chars = "0123456789".split("");
+
+        // Color scheme based on user's color preference
+        const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const primaryColor = isDarkMode ? '#3B82F6' : '#60A5FA';
+        const bgColor = isDarkMode ? '#0F172A' : '#F3F4F6';
+
+        function draw() {
+            // Background with transparency
+            ctx.fillStyle = `${bgColor}80`;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = primaryColor;
+            ctx.font = `${fontSize}px monospace`;
+
+            for (let i = 0; i < drops.length; i++) {
+                const char = chars[Math.floor(Math.random() * chars.length)];
+                const x = i * (fontSize / 2);
+                const y = drops[i];
+
+                // Random opacity
+                ctx.globalAlpha = Math.random() * 0.5 + 0.5;
+                ctx.fillText(char, x, y);
+
+                // Reset drops randomly
+                if (y > canvas.height) {
+                    drops[i] = 0;
+                }
+                drops[i] += fontSize;
+
+                // Add new random drops
+                if (Math.random() > 0.95) {
+                    drops[i] = 0;
+                }
+            }
+            ctx.globalAlpha = 1;
         }
-    }
-    ctx.globalAlpha = 1;
-}
 
-// زيادة سرعة التحديث
-setInterval(draw, 40);
+        // Donation Modal Functions
+        function openDonationModal() {
+    const modal = document.getElementById('donationModal');
+    modal.style.display = 'block';
+    
+    // إعادة تشغيل الanimation للأزرار داخل المودال
+    modal.querySelectorAll('.link-button').forEach((button) => {
+        button.style.animation = 'none';
+        button.offsetHeight;
+        button.style.animation = null;
+    });
+}
+        function closeDonationModal() {
+            document.getElementById('donationModal').style.display = 'none';
+        }
+
+        // Close modal if clicked outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('donationModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Increase update rate for matrix animation
+        setInterval(draw, 40);
     </script>
 </body>
 </html>
