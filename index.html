@@ -260,6 +260,11 @@
             animation: slideInLeft 0.7s cubic-bezier(0.23, 1, 0.32, 1) backwards;
             animation-delay: calc(0.5s + (0.5s * 0.5s));
         }
+        
+        #TwaslModal .link-button {
+            animation: slideInLeft 0.7s cubic-bezier(0.23, 1, 0.32, 1) backwards;
+            animation-delay: calc(0.5s + (0.5s * 0.5s));
+        }
 
         .link-button.premium {
             background: linear-gradient(135deg, #F59E0B, #D97706);
@@ -383,7 +388,7 @@
                 <a href="https://x.com/LSa3ed" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="X (Twitter)">
                     <i class="fab fa-x-twitter"></i>
                 </a>
-                <a href="https://t.me/RSaied_Bot" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Telegram Bot">
+                <a href="#" class="social-icon" aria-label="Telegram" onclick="openTwaslModal()">
                     <i class="fab fa-telegram"></i>
                 </a>
                 <a href="/Sareh/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Sareh">
@@ -461,6 +466,25 @@
                 <a href="https://t.me/$kQ6Xy0WvqVAuBQAAJR_rHJgvna8" target="_blank" rel="noopener noreferrer" class="link-button">
                     <i class="fab fa-telegram"></i>
                     التبرع عبر نجوم تيليجرام
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Twasl Modal -->
+    <div id="TwaslModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeTwaslModal()">&times;</span>
+            <h2>اختر طريقة التواصل</h2>
+            <div class="donation-options">
+                <a href="https://t.me/LSaied" target="_blank" rel="noopener noreferrer" class="link-button">
+                    <i class="fab fa-telegram"></i>
+حسابي الشخصي
+                </a>
+                <a href="https://t.me/RSaied_Bot" target="_blank" rel="noopener noreferrer" class="link-button">
+                    <i class="fab fa-telegram"></i>
+بوت التواصل
                 </a>
             </div>
         </div>
@@ -545,10 +569,32 @@
         function closeDonationModal() {
             document.getElementById('donationModal').style.display = 'none';
         }
+        
+        // Twasl Modal Functions
+        function openTwaslModal() {
+    const modal = document.getElementById('TwaslModal');
+    modal.style.display = 'block';
+    
+    // إعادة تشغيل الanimation للأزرار داخل المودال
+    modal.querySelectorAll('.link-button').forEach((button) => {
+        button.style.animation = 'none';
+        button.offsetHeight;
+        button.style.animation = null;
+    });
+}
+        function closeTwaslModal() {
+            document.getElementById('TwaslModal').style.display = 'none';
+        }
 
         // Close modal if clicked outside
         window.onclick = function(event) {
             const modal = document.getElementById('donationModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+        window.onclick = function(event) {
+            const modal = document.getElementById('TwaslModal');
             if (event.target == modal) {
                 modal.style.display = 'none';
             }
