@@ -21,33 +21,28 @@ document.getElementById('btn-download').addEventListener('click', function () {
 
     xhr.onprogress = function (event) {
         if (event.lengthComputable) {
-            // تعيين وقت البداية مرة واحدة فقط
             if (!startTime) {
                 startTime = new Date().getTime();
                 lastUpdateTime = startTime;
             }
 
             const currentTime = new Date().getTime();
-            const timeSinceLastUpdate = (currentTime - lastUpdateTime) / 1000; // بالثواني
+            const timeSinceLastUpdate = (currentTime - lastUpdateTime) / 1000;
             
             const loaded = event.loaded;
             const total = event.total;
             const percentComplete = (loaded / total) * 100;
 
-            // تحديث شريط التقدم
             progressBarInner.style.width = percentComplete + '%';
             progressText.innerText = 'الرجاء عدم إغلاق الصفحة حتى إنتهاء التحميل\n وصل إلى : ' + Math.round(percentComplete) + '%';
 
-            // حساب السرعة (فقط إذا مر وقت كافي لتجنب قراءات غير دقيقة)
             if (timeSinceLastUpdate > 0.1) {
                 const bytesDownloaded = loaded - previousLoaded;
-                const speed = bytesDownloaded / timeSinceLastUpdate; // بايت في الثانية
+                const speed = bytesDownloaded / timeSinceLastUpdate;
                 
-                // تحويل إلى كيلوبت في الثانية
                 const speedKbps = (speed * 8 / 1024).toFixed(2);
                 speedText.innerText = 'السرعة: ' + speedKbps + ' Kbps';
 
-                // حساب الوقت المتبقي
                 const remainingBytes = total - loaded;
                 if (speed > 0) {
                     const remainingSeconds = Math.floor(remainingBytes / speed);
@@ -56,7 +51,6 @@ document.getElementById('btn-download').addEventListener('click', function () {
                     remainingTimeText.innerText = 'الوقت المتبقي: ' + minutes + ' دقيقة و ' + seconds + ' ثانية';
                 }
 
-                // تحديث المتغيرات للقراءة التالية
                 previousLoaded = loaded;
                 lastUpdateTime = currentTime;
             }
@@ -66,32 +60,45 @@ document.getElementById('btn-download').addEventListener('click', function () {
     xhr.onload = function () {
         if (xhr.status === 200) {
             const blob = xhr.response;
+            
+            // إنشاء رابط مباشر للتحميل
             const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = url;
-            a.download = downloadName;
             
-            // إضافة العنصر إلى الصفحة
-            document.body.appendChild(a);
+            // إنشاء زر تحميل بدلاً من التحميل التلقائي
+            progressText.innerHTML = '✅ اكتمل تحميل التطبيق. 100%<br><br><button id="save-file-btn" style="background: #28a745; color: white; padding: 15px 30px; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; margin: 10px 0;">💾 اضغط هنا لحفظ الملف</button>';
+            speedText.innerText = '';
+            remainingTimeText.innerHTML = 'إذا لم يعمل الزر أعلاه <a href="'+ downloadUrl +'" download="' + downloadName + '" style="color: #007bff; text-decoration: underline;">إضغط هنا للتحميل المباشر</a>';
             
-            // محاولة التحميل
-            try {
+            // إضافة حدث للزر
+            document.getElementById('save-file-btn').addEventListener('click', function() {
+                // محاولة 1: استخدام download attribute
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = downloadName;
+                document.body.appendChild(a);
                 a.click();
-            } catch (e) {
-                // في حالة فشل click()، استخدام طريقة بديلة
-                window.location.href = url;
-            }
+                
+                // محاولة 2: فتح في نافذة جديدة (backup)
+                setTimeout(function() {
+                    try {
+                        window.open(url, '_blank');
+                    } catch (e) {
+                        console.log('Fallback method attempted');
+                    }
+                }, 100);
+                
+                // تنظيف
+                setTimeout(function() {
+                    if (document.body.contains(a)) {
+                        document.body.removeChild(a);
+                    }
+                }, 500);
+                
+                // تحديث النص
+                document.getElementById('save-file-btn').innerText = '✓ تم النقر - تحقق من التنزيلات';
+                document.getElementById('save-file-btn').style.background = '#6c757d';
+            });
             
-            // تنظيف بعد فترة قصيرة
-            setTimeout(function() {
-                document.body.removeChild(a);
-                window.URL.revokeObjectURL(url);
-            }, 100);
-
-            progressText.innerText = 'اكتمل تحميل التطبيق. 100%';
-            speedText.innerText = 'قم بفتح الملف من مجلد التنزيلات';
-            remainingTimeText.innerHTML = 'إذا لم تجد الملف في مجلد التنزيلات <a href="'+ downloadUrl +'" download="' + downloadName + '">إضغط هنا للتحميل مرة أخرى</a>';
         } else {
             progressText.innerText = 'حدث خطأ أثناء تحميل التطبيق. الرجاء المحاولة مرة أخرى.';
             speedText.innerText = '';
