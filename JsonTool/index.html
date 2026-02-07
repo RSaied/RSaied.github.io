@@ -1499,7 +1499,7 @@
                     </button>
                 </div>
                 <div class="carousel-counter" id="carouselCounter">
-                    <span class="current">1</span> / <span class="total">9</span>
+                    <span class="current">1</span> / <span class="total">1</span>
                 </div>
                 <div class="carousel-dots" id="carouselDots"></div>
             </div>
@@ -1710,6 +1710,11 @@
                 });
                 dotsContainer.appendChild(dot);
             });
+
+            const totalSpan = document.querySelector('#carouselCounter .total');
+            if (totalSpan) {
+            	totalSpan.textContent = carouselImages.length;
+            }
             
             // إضافة أحداث الأزرار
             const prevBtn = document.getElementById('carouselPrev');
@@ -1721,7 +1726,6 @@
             // بدء التشغيل التلقائي
             startAutoPlay();
             
-            console.log('Carousel initialized with', carouselImages.length, 'slides');
         }
 
         function goToSlide(index) {
