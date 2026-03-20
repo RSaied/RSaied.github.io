@@ -902,8 +902,15 @@
   document.addEventListener('copy', e => e.preventDefault());
   document.addEventListener('cut', e => e.preventDefault());
   document.addEventListener('dragstart', e => e.preventDefault());
-  document.addEventListener('touchstart', e => { if (e.target.closest('a, button')) e.preventDefault(); }, { passive: false });
-  document.addEventListener('touchend', e => { if (e.target.closest('a, button')) e.preventDefault(); }, { passive: false });
+  // Prevent long press context menu on mobile (without blocking clicks)
+  let longPressTimer;
+  document.addEventListener('touchstart', e => {
+    if (e.target.closest('a, button')) {
+      longPressTimer = setTimeout(() => e.preventDefault(), 300);
+    }
+  }, { passive: true });
+  document.addEventListener('touchend', () => clearTimeout(longPressTimer));
+  document.addEventListener('touchmove', () => clearTimeout(longPressTimer));
   window.addEventListener('load', () => {
     document.querySelectorAll('a, button').forEach(el => {
       el.addEventListener('contextmenu', e => e.preventDefault());
