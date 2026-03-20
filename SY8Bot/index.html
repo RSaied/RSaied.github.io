@@ -945,21 +945,21 @@
       const map = { privacy: 'tabPrivacy', terms: 'tabTerms' };
       document.getElementById(map[id])?.classList.add('active');
     }
-    try { history.replaceState(null, '', '#' + id); } catch(e) { /* iframe sandbox */ }
+    try { history.replaceState(null, '', '?tab=' + id); } catch(e) { /* iframe sandbox */ }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // ---- Handle hash on load & navigation ----
-  function loadFromHash() {
-    const full = window.location.href || '';
-    const hash = (window.location.hash || full.split('#')[1] || '').replace('#','').trim().toLowerCase();
-    if (hash === 'privacy' || hash === 'terms') switchTab(hash, null);
+  // ---- Handle tab from URL query param (?tab=terms) or hash (#terms) ----
+  function loadFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    const fromParam = (params.get('tab') || '').trim().toLowerCase();
+    const fromHash = (window.location.hash || '').replace('#','').trim().toLowerCase();
+    const tab = fromParam || fromHash;
+    if (tab === 'privacy' || tab === 'terms') switchTab(tab, null);
   }
-  window.addEventListener('hashchange', loadFromHash);
-  // Try immediately, then again after short delay for Telegram WebApp
-  loadFromHash();
-  setTimeout(loadFromHash, 300);
-  setTimeout(loadFromHash, 800);
+  loadFromURL();
+  setTimeout(loadFromURL, 300);
+  setTimeout(loadFromURL, 800);
 
   // ---- Particles ----
   const container = document.getElementById('particles');
