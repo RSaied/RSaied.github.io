@@ -25,6 +25,7 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-user-select: none; }
+  a, button { -webkit-touch-callout: none; }
 
   html { scroll-behavior: smooth; }
 
@@ -901,6 +902,13 @@
   document.addEventListener('copy', e => e.preventDefault());
   document.addEventListener('cut', e => e.preventDefault());
   document.addEventListener('dragstart', e => e.preventDefault());
+  document.addEventListener('touchstart', e => { if (e.target.closest('a, button')) e.preventDefault(); }, { passive: false });
+  document.addEventListener('touchend', e => { if (e.target.closest('a, button')) e.preventDefault(); }, { passive: false });
+  window.addEventListener('load', () => {
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('contextmenu', e => e.preventDefault());
+    });
+  });
   document.addEventListener('keydown', e => {
     if (e.key === 'F12') { e.preventDefault(); return false; }
     if (e.ctrlKey && e.shiftKey && ['I','J','C','K'].includes(e.key.toUpperCase())) { e.preventDefault(); return false; }
