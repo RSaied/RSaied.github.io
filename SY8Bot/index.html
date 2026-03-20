@@ -26,6 +26,8 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-user-select: none; }
   a, button { -webkit-touch-callout: none; }
+  a { pointer-events: auto; }
+  footer a { cursor: pointer; }
 
   html { scroll-behavior: smooth; }
 
@@ -890,7 +892,7 @@
 </main>
 
 <footer>
-  جميع الحقوق محفوظة © 2026 &nbsp;·&nbsp; <span>بوت صارحني</span> &nbsp;·&nbsp; @SY8Bot
+  جميع الحقوق محفوظة © 2026 &nbsp;·&nbsp; <a href="https://t.me/SY8Bot" target="_blank" style="background:linear-gradient(135deg,#e879f9,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:700;text-decoration:none;">بوت صارحني</a> &nbsp;·&nbsp; @SY8Bot
 </footer>
 
 <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
@@ -949,11 +951,15 @@
 
   // ---- Handle hash on load & navigation ----
   function loadFromHash() {
-    const hash = location.hash.replace('#', '');
+    const full = window.location.href || '';
+    const hash = (window.location.hash || full.split('#')[1] || '').replace('#','').trim().toLowerCase();
     if (hash === 'privacy' || hash === 'terms') switchTab(hash, null);
   }
   window.addEventListener('hashchange', loadFromHash);
+  // Try immediately, then again after short delay for Telegram WebApp
   loadFromHash();
+  setTimeout(loadFromHash, 300);
+  setTimeout(loadFromHash, 800);
 
   // ---- Particles ----
   const container = document.getElementById('particles');
