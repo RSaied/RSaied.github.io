@@ -592,9 +592,8 @@
 <header>
   <div class="logo-wrapper">
     <div class="logo-ring">
-      <img src="" alt="صارحني" class="logo-img" id="logoImg"
-        onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';">
-      <div class="logo-icon-fallback" id="logoFallback" style="display:none;">✉️</div>
+      <img src="" alt="صارحني" class="logo-img" id="logoImg" style="display:none;">
+      <div class="logo-icon-fallback" id="logoFallback">✉️</div>
     </div>
     <div>
       <div class="bot-name">صارحني</div>
@@ -992,8 +991,20 @@
     else btn.classList.remove('visible');
   });
 
-  // ---- Logo: load from favicon.ico ----
-  document.getElementById('logoImg').src = 'favicon.ico';
+  // ---- Logo: preload from favicon.ico ----
+  const logoImg = document.getElementById('logoImg');
+  const logoFallback = document.getElementById('logoFallback');
+  const preload = new Image();
+  preload.onload = () => {
+    logoImg.src = preload.src;
+    logoImg.style.display = 'block';
+    logoFallback.style.display = 'none';
+  };
+  preload.onerror = () => {
+    logoImg.style.display = 'none';
+    logoFallback.style.display = 'flex';
+  };
+  preload.src = 'favicon.ico?v=' + Date.now();
 </script>
 </body>
 </html>
