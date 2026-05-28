@@ -749,6 +749,11 @@ body {
   background-clip: text;
 }
 
+.completion-title .emoji-native {
+  -webkit-text-fill-color: initial;
+  background: none;
+}
+
 .completion-text {
   color: var(--text-secondary);
   font-size: 1rem;
