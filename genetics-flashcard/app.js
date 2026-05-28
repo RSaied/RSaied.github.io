@@ -54,7 +54,25 @@ document.addEventListener('DOMContentLoaded', () => {
   initFlashcard();
   populateSelects();
   updateQuizStart();
+  registerSW();
 });
+
+function registerSW() {
+  if (!('serviceWorker' in navigator)) return;
+  navigator.serviceWorker.register('./sw.js').then((reg) => {
+    reg.addEventListener('updatefound', () => {
+      const newSW = reg.installing;
+      newSW.addEventListener('statechange', () => {
+        if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+          showToast('🔄 نسخة جديدة متاحة! اضغط للتحديث', () => {
+            newSW.postMessage('SKIP_WAITING');
+            window.location.reload();
+          }, 10000);
+        }
+      });
+    });
+  }).catch(() => {});
+}
 
 
 
@@ -673,12 +691,14 @@ function renderStats() {
 // ============================================================
 // TOAST
 // ============================================================
-function showToast(msg) {
+function showToast(msg, onClick, duration) {
   const toast = document.getElementById('toast');
   toast.textContent = msg;
+  toast.onclick = onClick || null;
+  toast.style.cursor = onClick ? 'pointer' : 'default';
   toast.classList.add('show');
   clearTimeout(toast._timeout);
-  toast._timeout = setTimeout(() => toast.classList.remove('show'), 2500);
+  toast._timeout = setTimeout(() => toast.classList.remove('show'), duration || 2500);
 }
 
 // ============================================================
