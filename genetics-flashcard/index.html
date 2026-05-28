@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" href="favicon.svg">
   <link rel="manifest" href="manifest.json">
   <title>بطاقات الوراثة الطبية</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=1.0.1">
 </head>
 <body>
   <div class="background-animation">
@@ -185,6 +185,7 @@
           <option value="all">جميع الفصول</option>
         </select>
         <select id="quiz-count" class="styled-select">
+          <option value="">جاري التحميل...</option>
         </select>
         <button class="btn-primary" onclick="startQuiz()">🚀 ابدأ الاختبار</button>
       </div>
@@ -247,7 +248,7 @@
     <div class="toast" id="toast"></div>
   </div>
 
-  <script src="data.js"></script>
-  <script src="app.js"></script>
+  <script src="data.js?v=1.0.1"></script>
+  <script src="app.js?v=1.0.1"></script>
 </body>
 </html>
