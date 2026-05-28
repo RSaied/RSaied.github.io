@@ -18,7 +18,7 @@ const STATE = {
 };
 
 const STORAGE_KEY = 'genetics_flashcard_progress';
-const APP_VERSION = '1.0.1';
+const APP_VERSION = '1.0.2';
 
 // ============================================================
 // LOCAL STORAGE
@@ -49,6 +49,12 @@ function switchTab(tabId) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Redirect to versioned URL to trigger WebAPK update on Android
+  const verParam = '?v=' + APP_VERSION;
+  if (!window.location.search.includes('v=' + APP_VERSION)) {
+    window.location.replace(window.location.pathname + verParam);
+    return;
+  }
   document.querySelectorAll('.nav-tab').forEach(tab => {
     tab.addEventListener('click', () => switchTab(tab.dataset.tab));
   });
@@ -68,8 +74,10 @@ function registerSW() {
         if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
           showToast('🔄 نسخة جديدة متاحة! اضغط للتحديث', () => {
             newSW.postMessage('SKIP_WAITING');
-            window.location.reload();
-          }, 10000);
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+              window.location.reload();
+            }, { once: true });
+          }, 0);
         }
       });
     });
@@ -700,7 +708,9 @@ function showToast(msg, onClick, duration) {
   toast.style.cursor = onClick ? 'pointer' : 'default';
   toast.classList.add('show');
   clearTimeout(toast._timeout);
-  toast._timeout = setTimeout(() => toast.classList.remove('show'), duration || 2500);
+  if (duration !== 0) {
+    toast._timeout = setTimeout(() => toast.classList.remove('show'), duration || 2500);
+  }
 }
 
 // ============================================================
