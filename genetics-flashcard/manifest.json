@@ -1,0 +1,15 @@
+{
+  "name": "بطاقات الوراثة الطبية",
+  "short_name": "الوراثة الطبية",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0f0c29",
+  "theme_color": "#7c3aed",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

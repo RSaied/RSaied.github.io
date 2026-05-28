@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>بطاقات الوراثة الطبية</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="background-animation">
+    <div class="bg-circle"></div>
+    <div class="bg-circle"></div>
+    <div class="bg-circle"></div>
+  </div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-top">
+        <h1><span class="dna-icon">🧬</span><span class="title-text">بطاقات الوراثة الطبية</span></h1>
+        <button class="btn-settings" id="btn-settings" onclick="toggleSettings()" title="الإعدادات">⚙️</button>
+      </div>
+      <p class="subtitle" id="welcome-msg">أهلاً بك في تطبيق المراجعة الذكية</p>
+      <div class="theme-selector">
+        <button class="theme-btn active" data-theme="night" onclick="setTheme('night')" title="ليلي">🌙</button>
+        <button class="theme-btn" data-theme="day" onclick="setTheme('day')" title="نهاري">☀️</button>
+        <button class="theme-btn" data-theme="pink" onclick="setTheme('pink')" title="بناتي">🌸</button>
+        <button class="theme-btn" data-theme="blue" onclick="setTheme('blue')" title="شبابي">💙</button>
+      </div>
+    </header>
+
+    <!-- Settings Modal -->
+    <div class="settings-modal" id="settings-modal">
+      <div class="settings-content">
+        <button class="settings-close" onclick="toggleSettings()">✕</button>
+        <h3>⚙️ الإعدادات</h3>
+        <label>اسم المستخدم</label>
+        <div class="settings-name-row">
+          <input type="text" id="user-name-input" class="styled-input" placeholder="أدخل اسمك..." maxlength="20" autofocus>
+          <button class="btn-primary" style="padding:10px 20px" onclick="saveUserName()">حفظ</button>
+        </div>
+        <p style="color:var(--text-muted);font-size:0.8rem;margin-top:8px">سيظهر اسمك في رسالة الترحيب</p>
+        <hr style="border-color:var(--border-color);margin:16px 0">
+        <h3 style="font-size:0.9rem;margin-bottom:8px">🗑️ مسح البيانات</h3>
+        <p style="color:var(--text-muted);font-size:0.8rem;margin-bottom:10px">سيتم مسح جميع نتائجك والبدء من جديد</p>
+        <button class="btn-danger" onclick="resetAllProgress()">🔄 مسح النتائج وإعادة التعيين</button>
+      </div>
+    </div>
+    <div class="settings-overlay" id="settings-overlay" onclick="toggleSettings()"></div>
+
+    <!-- Navigation -->
+    <nav class="nav-tabs" id="nav-tabs">
+      <button class="nav-tab active" data-tab="flashcard">📇 البطاقات التعليمية</button>
+      <button class="nav-tab" data-tab="smart">🧠 المراجعة الذكية</button>
+      <button class="nav-tab" data-tab="quiz">📝 الاختبارات</button>
+      <button class="nav-tab" data-tab="list">📋 قائمة المصطلحات</button>
+      <button class="nav-tab" data-tab="stats">📊 إحصائياتي</button>
+    </nav>
+
+    <!-- ==================== SECTION: FLASHCARD ==================== -->
+    <section class="tab-content active" id="tab-flashcard">
+      <!-- Chapter Grid -->
+      <div class="chapter-grid" id="chapter-grid"></div>
+
+      <!-- Flashcard View -->
+      <div class="flashcard-view" id="flashcard-view">
+        <div class="flashcard-header">
+          <button class="btn-back" onclick="goBack()">← الرجوع للفصول</button>
+          <span class="flashcard-progress-text" id="flashcard-progress">0 / 0</span>
+        </div>
+        <div class="card-container">
+          <div class="flashcard" id="flashcard">
+            <div class="card-face card-front">
+              <div class="card-label">English Term</div>
+              <div class="card-term-en" id="card-term-en">term</div>
+              <div class="card-hint">👆 اضغط للكشف عن الإجابة</div>
+            </div>
+            <div class="card-face card-back">
+              <div class="card-label">المعنى بالعربية</div>
+              <div class="card-term-ar" id="card-term-ar">مصطلح</div>
+              <div class="card-difficulty-indicator">
+                <span class="diff-dot easy"></span>
+                <span class="diff-dot medium"></span>
+                <span class="diff-dot hard"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="controls">
+          <div class="difficulty-selector">
+            <button class="btn-difficulty easy" data-difficulty="easy" onclick="selectDifficulty('easy')">🟢 سهل (1) — أسبوع</button>
+            <button class="btn-difficulty medium" data-difficulty="medium" onclick="selectDifficulty('medium')">🟡 متوسط (2) — يومان</button>
+            <button class="btn-difficulty hard" data-difficulty="hard" onclick="selectDifficulty('hard')">🔴 صعب (3) — يوم</button>
+          </div>
+          <div class="action-buttons">
+            <button class="btn-action btn-know" id="btn-know" onclick="markKnown()">✅ أعرفه (K)</button>
+            <button class="btn-action btn-dont-know" id="btn-dont-know" onclick="markUnknown()">❌ لا أعرفه (D)</button>
+          </div>
+          <div class="keyboard-hint">␣ اقلب | Enter أعرفه | D لا أعرفه | Esc رجوع</div>
+        </div>
+      </div>
+
+      <!-- Completion -->
+      <div class="completion-view" id="completion-view">
+        <div class="completion-icon">🎉</div>
+        <h2 class="completion-title">أحسنت! 🏆</h2>
+        <p class="completion-text">لقد أكملت مراجعة هذه المجموعة</p>
+        <div class="completion-stats">
+          <div class="completion-stat"><div class="completion-stat-value" id="completion-known">0</div><div class="completion-stat-label">✅ أعرفها</div></div>
+          <div class="completion-stat"><div class="completion-stat-value" id="completion-unknown">0</div><div class="completion-stat-label">❌ لا أعرفها</div></div>
+          <div class="completion-stat"><div class="completion-stat-value" id="completion-total">0</div><div class="completion-stat-label">📝 المجموع</div></div>
+        </div>
+        <p id="completion-extra" class="completion-extra"></p>
+        <button class="btn-primary" onclick="goBack()">رجوع للفصول</button>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION: SMART REVIEW ==================== -->
+    <section class="tab-content" id="tab-smart">
+      <div class="section-header">
+        <h2>🧠 المراجعة الذكية</h2>
+        <p class="section-subtitle">المصطلحات التي تحتاج مراجعة اليوم</p>
+      </div>
+      <div class="section-controls">
+        <select id="smart-chapter" class="styled-select" onchange="loadSmartReview()">
+          <option value="all">جميع الفصول</option>
+        </select>
+        <span id="smart-count" class="badge-count">0</span>
+      </div>
+      <!-- Smart review card -->
+      <div class="smart-card-view" id="smart-card-view">
+        <div class="smart-card-header">
+          <span id="smart-progress" class="flashcard-progress-text">0 / 0</span>
+        </div>
+        <div class="card-container smart-card-container">
+          <div class="flashcard" id="smart-flashcard">
+            <div class="card-face card-front">
+              <div class="card-label">English Term</div>
+              <div class="card-term-en" id="smart-term-en">term</div>
+              <div class="card-hint">👆 اضغط للكشف عن الإجابة</div>
+            </div>
+            <div class="card-face card-back">
+              <div class="card-label">المعنى بالعربية</div>
+              <div class="card-term-ar" id="smart-term-ar">مصطلح</div>
+              <div class="card-difficulty-indicator">
+                <span class="diff-dot easy"></span>
+                <span class="diff-dot medium"></span>
+                <span class="diff-dot hard"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="smart-meta" class="smart-meta" style="justify-content:center;margin-bottom:12px"></div>
+        <div class="controls">
+          <div class="difficulty-selector">
+            <button class="btn-difficulty easy" data-difficulty="easy" onclick="smartSelect('easy')">🟢 سهل (1) — أسبوع</button>
+            <button class="btn-difficulty medium" data-difficulty="medium" onclick="smartSelect('medium')">🟡 متوسط (2) — يومان</button>
+            <button class="btn-difficulty hard" data-difficulty="hard" onclick="smartSelect('hard')">🔴 صعب (3) — يوم</button>
+          </div>
+          <div class="action-buttons">
+            <button class="btn-action btn-know" onclick="smartMark('known')">✅ أعرفه (K)</button>
+            <button class="btn-action btn-dont-know" onclick="smartMark('unknown')">❌ لا أعرفه (D)</button>
+          </div>
+        </div>
+      </div>
+      <div id="smart-empty" class="smart-empty" style="display:none">🎉 لا توجد مصطلحات للمراجعة اليوم</div>
+    </section>
+
+    <!-- ==================== SECTION: QUIZ ==================== -->
+    <section class="tab-content" id="tab-quiz">
+      <div class="section-header">
+        <h2>📝 الاختبارات</h2>
+        <p class="section-subtitle">اختر فصل وابدأ الاختبار</p>
+      </div>
+      <div class="section-controls" id="quiz-controls">
+        <select id="quiz-chapter" class="styled-select" onchange="updateQuizStart()">
+          <option value="all">جميع الفصول</option>
+        </select>
+        <select id="quiz-count" class="styled-select">
+          <option value="5">5 أسئلة</option>
+          <option value="10" selected>10 أسئلة</option>
+          <option value="20">20 سؤال</option>
+        </select>
+        <button class="btn-primary" onclick="startQuiz()">🚀 ابدأ الاختبار</button>
+      </div>
+      <div id="quiz-view" class="quiz-view" style="display:none">
+        <div class="quiz-header">
+          <span id="quiz-progress">1 / 10</span>
+          <span id="quiz-score">✅ 0 | ❌ 0</span>
+        </div>
+        <div class="quiz-card">
+          <div class="quiz-label">اختر الترجمة الصحيحة</div>
+          <div class="quiz-term" id="quiz-term">term</div>
+        </div>
+        <div class="quiz-options" id="quiz-options"></div>
+        <div class="quiz-feedback" id="quiz-feedback"></div>
+      </div>
+      <div id="quiz-result" class="quiz-result" style="display:none">
+        <div class="result-icon">🏆</div>
+        <h2 id="result-title">النتيجة</h2>
+        <div class="result-stats">
+          <div class="result-stat"><span id="result-correct">0</span> ✅ صح</div>
+          <div class="result-stat"><span id="result-wrong">0</span> ❌ خطأ</div>
+          <div class="result-stat"><span id="result-pct">0%</span> 📊 نسبة الإتقان</div>
+        </div>
+        <button class="btn-primary" onclick="resetQuiz()">إعادة الاختبار</button>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION: TERMS LIST ==================== -->
+    <section class="tab-content" id="tab-list">
+      <div class="section-header">
+        <h2>📋 قائمة المصطلحات</h2>
+        <p class="section-subtitle">جميع المصطلحات مع ترجمتها</p>
+      </div>
+      <div class="section-controls">
+        <select id="list-chapter" class="styled-select" onchange="renderTermsList()">
+          <option value="all">جميع الفصول</option>
+        </select>
+        <input type="text" id="list-search" class="styled-input" placeholder="🔍 بحث..." oninput="renderTermsList()">
+      </div>
+      <div id="terms-list" class="terms-list"></div>
+    </section>
+
+    <!-- ==================== SECTION: STATS ==================== -->
+    <section class="tab-content" id="tab-stats">
+      <div class="section-header">
+        <h2>📊 إحصائياتي</h2>
+        <p class="section-subtitle">تقدمك في مراجعة المصطلحات</p>
+      </div>
+      <div class="stats-grid" id="stats-grid"></div>
+      <div class="stats-chapters" id="stats-chapters"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-row">بدعم من <strong>سعيد</strong> <a href="https://ssss.sy" target="_blank" rel="noopener" dir="ltr" class="footer-link">ssss.sy</a></div>
+    </footer>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
