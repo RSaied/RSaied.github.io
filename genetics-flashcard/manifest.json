@@ -1,6 +1,7 @@
 {
   "name": "بطاقات الوراثة الطبية",
   "short_name": "الوراثة الطبية",
+  "version": "1.0.0",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#0f0c29",
