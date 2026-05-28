@@ -18,7 +18,7 @@ const STATE = {
 };
 
 const STORAGE_KEY = 'genetics_flashcard_progress';
-const APP_VERSION = '1.0.2';
+const APP_VERSION = '1.0.3';
 
 // ============================================================
 // LOCAL STORAGE
@@ -49,7 +49,7 @@ function switchTab(tabId) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Redirect to versioned URL to trigger WebAPK update on Android
+  // Redirect to versioned URL for Android WebAPK update
   const verParam = '?v=' + APP_VERSION;
   if (!window.location.search.includes('v=' + APP_VERSION)) {
     window.location.replace(window.location.pathname + verParam);
@@ -62,31 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
   populateSelects();
   updateQuizStart();
   document.getElementById('app-version').textContent = APP_VERSION;
-  registerSW();
 });
 
-function registerSW() {
-  if (!('serviceWorker' in navigator)) return;
-  navigator.serviceWorker.register('./sw.js').then((reg) => {
-    reg.addEventListener('updatefound', () => {
-      const newSW = reg.installing;
-      newSW.addEventListener('statechange', () => {
-        if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
-          showToast('🔄 نسخة جديدة متاحة! اضغط للتحديث', () => {
-            newSW.postMessage('SKIP_WAITING');
-            if (navigator.serviceWorker.controller) {
-              navigator.serviceWorker.addEventListener('controllerchange', () => {
-                window.location.reload();
-              }, { once: true });
-            } else {
-              window.location.reload();
-            }
-          }, 0);
-        }
-      });
-    });
-  }).catch(() => {});
-}
 
 
 
