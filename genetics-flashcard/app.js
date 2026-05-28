@@ -19,7 +19,7 @@ const STATE = {
 
 const STORAGE_KEY = 'genetics_flashcard_progress';
 const SESSION_KEY = 'genetics_flashcard_session';
-const APP_VERSION = '1.0.4';
+const APP_VERSION = '1.0.5';
 
 // ============================================================
 // LOCAL STORAGE
