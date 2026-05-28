@@ -18,6 +18,7 @@ const STATE = {
 };
 
 const STORAGE_KEY = 'genetics_flashcard_progress';
+const APP_VERSION = '1.0.1';
 
 // ============================================================
 // LOCAL STORAGE
@@ -54,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initFlashcard();
   populateSelects();
   updateQuizStart();
+  document.getElementById('app-version').textContent = APP_VERSION;
   registerSW();
 });
 
