@@ -1,4 +1,4 @@
-const CACHE_NAME = 'genetics-flashcard-v1.1.0';
+const CACHE_NAME = 'genetics-flashcard-v1.0.0';
 const FILES = [
   './',
   './index.html',
