@@ -126,10 +126,20 @@ function getDueTerms(chapterIndex) {
 function startChapter(chapterIndex) {
   STATE.currentChapter = chapterIndex;
   const due = getDueTerms(chapterIndex);
-  if (due.length === 0) { showCompletion(); return; }
-  STATE.currentTerms = due;
+  if (due.length === 0) {
+    // No due terms - show all terms for review anyway
+    const chapter = STATE.chapters[chapterIndex];
+    const all = chapter.terms.map((term, idx) => {
+      const key = chapterIndex + '-' + idx;
+      return { term, index: idx, key, isNew: false, record: null };
+    });
+    STATE.currentTerms = all;
+    STATE.sessionStats = { known: 0, unknown: 0, total: all.length };
+  } else {
+    STATE.currentTerms = due;
+    STATE.sessionStats = { known: 0, unknown: 0, total: due.length };
+  }
   STATE.currentTermIndex = 0;
-  STATE.sessionStats = { known: 0, unknown: 0, total: due.length };
   STATE.selectedDifficulty = null;
   STATE.isFlipped = false;
   showFlashcardView();
