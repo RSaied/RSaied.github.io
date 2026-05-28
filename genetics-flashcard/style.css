@@ -100,6 +100,34 @@
 
 [data-theme="blue"] .theme-btn { background: rgba(255,255,255,0.08); }
 
+/* Green/Nature theme */
+[data-theme="green"] {
+  --body-bg: linear-gradient(135deg, #0a1a0f 0%, #0f2d1a 30%, #0a2d1a 60%, #0f2d1a 100%);
+  --bg-primary: #0a1a0f;
+  --bg-secondary: #0f2d1a;
+  --bg-tertiary: #0a2d1a;
+  --bg-card: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(74, 222, 128, 0.15);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --accent-1: #16a34a;
+  --accent-2: #22c55e;
+  --accent-3: #059669;
+  --accent-gold: #10b981;
+  --text-primary: #f0fdf4;
+  --text-secondary: rgba(240, 253, 244, 0.7);
+  --text-muted: rgba(240, 253, 244, 0.4);
+  --success: #22d3ee;
+  --danger: #f87171;
+  --easy-color: #22c55e;
+  --medium-color: #60a5fa;
+  --hard-color: #f87171;
+}
+
+[data-theme="green"] .theme-btn { background: rgba(255,255,255,0.08); }
+[data-theme="green"] .bg-circle:nth-child(1) { background: #16a34a; }
+[data-theme="green"] .bg-circle:nth-child(2) { background: #059669; }
+[data-theme="green"] .bg-circle:nth-child(3) { background: #047857; }
+
 * {
   margin: 0;
   padding: 0;

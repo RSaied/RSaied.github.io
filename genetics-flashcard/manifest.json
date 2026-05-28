@@ -1,7 +1,8 @@
 {
   "name": "بطاقات الوراثة الطبية",
   "short_name": "بطاقات الوراثة الطبية",
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "description": "بطاقات الوراثة الطبية - الإصدار 1.1.0 by ssss.sy",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#0f0c29",

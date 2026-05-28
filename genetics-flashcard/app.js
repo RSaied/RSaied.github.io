@@ -41,6 +41,10 @@ function switchTab(tabId) {
   if (tabId === 'smart') loadSmartReview();
   if (tabId === 'list') renderTermsList();
   if (tabId === 'stats') renderStats();
+  if (tabId === 'quiz') {
+    const qv = document.getElementById('quiz-view');
+    if (qv.style.display !== 'flex') resetQuiz();
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -49,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   initFlashcard();
   populateSelects();
+  updateQuizStart();
 });
 
 
@@ -439,12 +444,27 @@ function smartMark(type) {
 // ============================================================
 // QUIZ SECTION
 // ============================================================
-function updateQuizStart() {}
+function updateQuizStart() {
+  const chVal = document.getElementById('quiz-chapter').value;
+  let total = 0;
+  STATE.chapters.forEach((ch, i) => {
+    if (chVal !== 'all' && parseInt(chVal) !== i) return;
+    total += ch.terms.length;
+  });
+  const sel = document.getElementById('quiz-count');
+  sel.innerHTML = '<option value="all">جميع الأسئلة (' + total + ')</option>';
+  const steps = [5, 10, 20];
+  for (const s of steps) {
+    if (s < total) sel.innerHTML += '<option value="' + s + '">' + s + ' سؤال</option>';
+  }
+  for (let s = 30; s < total; s += 10) {
+    sel.innerHTML += '<option value="' + s + '">' + s + ' سؤال</option>';
+  }
+}
 
 function startQuiz() {
   const chVal = document.getElementById('quiz-chapter').value;
-  const count = parseInt(document.getElementById('quiz-count').value);
-  const progress = loadProgress();
+  const countOpt = document.getElementById('quiz-count').value;
   let pool = [];
 
   STATE.chapters.forEach((ch, i) => {
@@ -455,6 +475,8 @@ function startQuiz() {
   });
 
   if (pool.length < 4) { showToast('عدد المصطلحات قليل جداً للاختبار'); return; }
+
+  const count = countOpt === 'all' ? pool.length : parseInt(countOpt);
 
   // Shuffle and pick
   pool = shuffle(pool);
@@ -571,9 +593,9 @@ function renderTermsList() {
       const div = document.createElement('div');
       div.className = 'terms-list-item';
       div.innerHTML =
-        '<span class="terms-list-en">' + term.en + '</span>' +
+        '<span class="terms-list-chapter">' + ch.id + '</span>' +
         '<span class="terms-list-ar">' + term.ar + '</span>' +
-        '<span class="terms-list-chapter">' + ch.id + '</span>';
+        '<span class="terms-list-en">' + term.en + '</span>';
       list.appendChild(div);
     });
   });
