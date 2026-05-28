@@ -15,7 +15,6 @@ self.addEventListener('install', (e) => {
       return cache.addAll(FILES);
     })
   );
-  self.skipWaiting();
 });
 
 self.addEventListener('activate', (e) => {

@@ -74,9 +74,13 @@ function registerSW() {
         if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
           showToast('🔄 نسخة جديدة متاحة! اضغط للتحديث', () => {
             newSW.postMessage('SKIP_WAITING');
-            navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (navigator.serviceWorker.controller) {
+              navigator.serviceWorker.addEventListener('controllerchange', () => {
+                window.location.reload();
+              }, { once: true });
+            } else {
               window.location.reload();
-            }, { once: true });
+            }
           }, 0);
         }
       });
