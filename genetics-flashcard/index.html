@@ -2,12 +2,16 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="بطاقات الوراثة الطبية">
+  <meta name="application-name" content="بطاقات الوراثة الطبية">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="favicon.svg">
+  <link rel="manifest" href="manifest.json">
   <title>بطاقات الوراثة الطبية</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#7c3aed">
 </head>
 <body>
   <div class="background-animation">
@@ -39,7 +43,7 @@
         <h3>⚙️ الإعدادات</h3>
         <label>اسم المستخدم</label>
         <div class="settings-name-row">
-          <input type="text" id="user-name-input" class="styled-input" placeholder="أدخل اسمك..." maxlength="20" autofocus>
+          <input type="text" id="user-name-input" class="styled-input" placeholder="أدخل اسمك..." maxlength="20">
           <button class="btn-primary" style="padding:10px 20px" onclick="saveUserName()">حفظ</button>
         </div>
         <p style="color:var(--text-muted);font-size:0.8rem;margin-top:8px">سيظهر اسمك في رسالة الترحيب</p>
