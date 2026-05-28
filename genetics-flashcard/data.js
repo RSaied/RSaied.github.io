@@ -1852,7 +1852,8 @@ const TERMS_DATA = [
                           "ar":  "ناقالت م"
                       },
                       {
-"ar":  "ناقلات الميثيل (DNMTs)"
+                          "en":  "DNA methyltransferases (DNMTs)",
+                          "ar":  "ناقلات الميثيل (DNMTs)"
                       },
                       {
                           "en":  "Clonal",

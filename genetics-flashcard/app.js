@@ -18,7 +18,8 @@ const STATE = {
 };
 
 const STORAGE_KEY = 'genetics_flashcard_progress';
-const APP_VERSION = '1.0.3';
+const SESSION_KEY = 'genetics_flashcard_session';
+const APP_VERSION = '1.0.4';
 
 // ============================================================
 // LOCAL STORAGE
@@ -33,12 +34,32 @@ function saveProgress(progress) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
 }
 
+function saveFlashcardSession() {
+  if (STATE.currentChapter === null || STATE.currentTermIndex >= STATE.currentTerms.length) return;
+  try {
+    localStorage.setItem(SESSION_KEY, JSON.stringify({
+      chapter: STATE.currentChapter,
+      termIndex: STATE.currentTermIndex,
+    }));
+  } catch {}
+}
+
+function clearFlashcardSession() {
+  localStorage.removeItem(SESSION_KEY);
+}
+
 // ============================================================
 // TAB NAVIGATION
 // ============================================================
 function switchTab(tabId) {
+  if (tabId !== 'flashcard') saveFlashcardSession();
+  localStorage.setItem('genetics_last_tab', tabId);
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tabId));
   document.querySelectorAll('.tab-content').forEach(t => t.classList.toggle('active', t.id === 'tab-' + tabId));
+  if (tabId === 'flashcard') {
+    if (STATE.currentChapter === null) renderChapterGrid();
+    else showFlashcardView();
+  }
   if (tabId === 'smart') loadSmartReview();
   if (tabId === 'list') renderTermsList();
   if (tabId === 'stats') renderStats();
@@ -49,12 +70,6 @@ function switchTab(tabId) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Redirect to versioned URL for Android WebAPK update
-  const verParam = '?v=' + APP_VERSION;
-  if (!window.location.search.includes('v=' + APP_VERSION)) {
-    window.location.replace(window.location.pathname + verParam);
-    return;
-  }
   document.querySelectorAll('.nav-tab').forEach(tab => {
     tab.addEventListener('click', () => switchTab(tab.dataset.tab));
   });
@@ -62,10 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
   populateSelects();
   updateQuizStart();
   document.getElementById('app-version').textContent = APP_VERSION;
+  const lastTab = localStorage.getItem('genetics_last_tab');
+  if (lastTab && lastTab !== 'flashcard') switchTab(lastTab);
 });
-
-
-
 
 function populateSelects() {
   ['smart-chapter', 'quiz-chapter', 'list-chapter'].forEach(id => {
@@ -135,20 +149,39 @@ function getDueTerms(chapterIndex) {
 function startChapter(chapterIndex) {
   STATE.currentChapter = chapterIndex;
   const due = getDueTerms(chapterIndex);
+  let terms;
   if (due.length === 0) {
-    // No due terms - show all terms for review anyway
     const chapter = STATE.chapters[chapterIndex];
-    const all = chapter.terms.map((term, idx) => {
-      const key = chapterIndex + '-' + idx;
-      return { term, index: idx, key, isNew: false, record: null };
-    });
-    STATE.currentTerms = all;
-    STATE.sessionStats = { known: 0, unknown: 0, total: all.length };
+    const progress = loadProgress();
+    const unknownTerms = chapter.terms
+      .map((term, idx) => {
+        const key = chapterIndex + '-' + idx;
+        const record = progress[key];
+        return { term, index: idx, key, isNew: false, record };
+      })
+      .filter(t => t.record && t.record.known === false);
+    if (unknownTerms.length > 0) {
+      terms = unknownTerms;
+    } else {
+      terms = chapter.terms.map((term, idx) => {
+        const key = chapterIndex + '-' + idx;
+        return { term, index: idx, key, isNew: false, record: null };
+      });
+    }
+    STATE.sessionStats = { known: 0, unknown: 0, total: terms.length };
   } else {
-    STATE.currentTerms = due;
+    terms = due;
     STATE.sessionStats = { known: 0, unknown: 0, total: due.length };
   }
+  STATE.currentTerms = terms;
   STATE.currentTermIndex = 0;
+  // Restore session if exists and same chapter
+  try {
+    const session = JSON.parse(localStorage.getItem(SESSION_KEY));
+    if (session && session.chapter === chapterIndex && session.termIndex < terms.length) {
+      STATE.currentTermIndex = session.termIndex;
+    }
+  } catch {}
   STATE.selectedDifficulty = null;
   STATE.isFlipped = false;
   showFlashcardView();
@@ -225,18 +258,16 @@ function markUnknown() {
   }
   const data = STATE.currentTerms[STATE.currentTermIndex];
   const progress = loadProgress();
-  const intervals = { easy: 604800000, medium: 172800000, hard: 86400000 };
   progress[data.key] = {
     difficulty: STATE.selectedDifficulty,
-    nextReview: Date.now() + intervals[STATE.selectedDifficulty],
+    nextReview: Date.now(),
     lastReviewed: Date.now(),
     timesReviewed: progress[data.key]?.timesReviewed || 0,
     known: false,
   };
   saveProgress(progress);
   STATE.sessionStats.unknown++;
-  const d = STATE.selectedDifficulty;
-  showToast('سيعاد المصطلح بعد ' + (d === 'hard' ? 'يوم' : d === 'medium' ? 'يومين' : 'أسبوع'));
+  showToast('سيظهر في المتبقي للمراجعة');
   nextTerm();
 }
 
@@ -251,6 +282,7 @@ function nextTerm() {
 }
 
 function showCompletion() {
+  clearFlashcardSession();
   let totalDue = 0;
   STATE.chapters.forEach((ch, idx) => { totalDue += getDueTerms(idx).length; });
   document.getElementById('completion-known').textContent = STATE.sessionStats.known;
@@ -269,6 +301,7 @@ function showFlashcardView() {
 }
 
 function goBack() {
+  saveFlashcardSession();
   STATE.currentChapter = null;
   document.getElementById('chapter-grid').style.display = 'grid';
   document.getElementById('flashcard-view').classList.remove('active');
@@ -288,7 +321,7 @@ function renderChapterGrid() {
     chapter.terms.forEach((term, idx) => {
       const key = index + '-' + idx;
       const record = progress[key];
-      if (record && record.known) reviewed++;
+        if (record && record.known === true) reviewed++;
       if (!record || (record.nextReview && now >= record.nextReview)) due++;
     });
     const pct = total > 0 ? Math.round((reviewed / total) * 100) : 0;
@@ -300,7 +333,7 @@ function renderChapterGrid() {
       '<div class="chapter-progress">' +
       '<div class="progress-bar"><div class="progress-fill" style="width:' + pct + '%"></div></div>' +
       '<span class="chapter-count">' + reviewed + '/' + total + '</span>' +
-      (due > 0 ? '<span class="due-badge">' + due + '</span>' : '') +
+      (due >= 0 ? '<span class="due-badge">' + due + '</span>' : '') +
       '</div>';
     card.addEventListener('click', () => startChapter(index));
     grid.appendChild(card);
@@ -318,7 +351,7 @@ function updateGlobalStats() {
     ch.terms.forEach((t, j) => {
       const key = i + '-' + j;
       const r = progress[key];
-      if (r && r.known) reviewed++;
+      if (r && r.known === true) reviewed++;
       if (!r || (r && r.nextReview && now >= r.nextReview)) due++;
     });
   });
@@ -605,6 +638,7 @@ function renderTermsList() {
   STATE.chapters.forEach((ch, i) => {
     if (chVal !== 'all' && parseInt(chVal) !== i) return;
     ch.terms.forEach((term, j) => {
+      if (!term || typeof term.en === 'undefined') return;
       const en = term.en.toLowerCase();
       const ar = term.ar.toLowerCase();
       if (search && !en.includes(search) && !ar.includes(search)) return;
@@ -650,7 +684,7 @@ function renderStats() {
         totalDue++;
       }
     });
-    chapterStats.push({ id: ch.id, title: ch.title, total: ch.terms.length, reviewed: rev, known, unknown, due });
+    chapterStats.push({ id: ch.id, title: ch.title, total: ch.terms.length, reviewed: known, known, unknown, due });
   });
 
   const mastery = totalReviewed > 0 ? Math.round((totalKnown / totalReviewed) * 100) : 0;
@@ -729,6 +763,7 @@ function toggleSettings() {
 function resetAllProgress() {
   if (confirm('هل أنت متأكد من مسح جميع النتائج؟ سيتم فقدان كل التقدم ولن يمكن التراجع.')) {
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(SESSION_KEY);
     STATE.sessionStats = { known: 0, unknown: 0, total: 0 };
     showToast('✅ تم مسح جميع النتائج');
     if (document.getElementById('tab-stats').classList.contains('active')) renderStats();
