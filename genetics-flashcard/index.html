@@ -13,7 +13,7 @@
   <link rel="manifest" href="manifest.json" id="manifest-link">
   <script>if (location.protocol === 'file:') document.getElementById('manifest-link').remove();</script>
   <title>بطاقات الوراثة الطبية</title>
-  <link rel="stylesheet" href="style.css?v=1.0.7">
+  <link rel="stylesheet" href="style.css?v=1.0.8">
 </head>
 <body>
   <div class="background-animation">
@@ -107,7 +107,7 @@
             <button class="btn-action btn-know" id="btn-know" onclick="markKnown()">✅ أعرفه (K)</button>
             <button class="btn-action btn-dont-know" id="btn-dont-know" onclick="markUnknown()">❌ لا أعرفه (D)</button>
           </div>
-          <div class="keyboard-hint">␣ اقلب | Enter أعرفه | D لا أعرفه | Esc رجوع</div>
+          <div class="keyboard-hint"><span>␣ اقلب</span><span>Enter أعرفه</span><span>D لا أعرفه</span><span>Esc رجوع</span></div>
         </div>
       </div>
 
@@ -245,14 +245,14 @@
     <footer class="app-footer">
       <div class="footer-row">مدعوم من <strong>سعيد</strong> <a href="https://ssss.sy" target="_blank" rel="noopener" dir="ltr" class="footer-link">ssss.sy</a></div>
       <div class="footer-row" style="font-size:0.8rem;color:var(--text-muted);margin-top:2px">دعواتكم ولكم بالمثل 🤍</div>
-      <div class="footer-row" style="font-size:0.75rem;color:var(--text-muted);margin-top:4px">الإصدار <span id="app-version">1.0.7</span></div>
+      <div class="footer-row" style="font-size:0.75rem;color:var(--text-muted);margin-top:4px">الإصدار <span id="app-version">1.0.8</span></div>
     </footer>
 
     <!-- Toast -->
     <div class="toast" id="toast"></div>
   </div>
 
-  <script src="data.js?v=1.0.7"></script>
-  <script src="app.js?v=1.0.7"></script>
+  <script src="data.js?v=1.0.8"></script>
+  <script src="app.js?v=1.0.8"></script>
 </body>
 </html>

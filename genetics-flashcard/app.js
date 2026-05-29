@@ -19,7 +19,7 @@ const STATE = {
 
 const STORAGE_KEY = 'genetics_flashcard_progress';
 const SESSION_KEY = 'genetics_flashcard_session';
-const APP_VERSION = '1.0.7';
+const APP_VERSION = '1.0.8';
 
 // ============================================================
 // LOCAL STORAGE
@@ -111,8 +111,8 @@ function initFlashcard() {
     if (e.key === '1') selectDifficulty('easy');
     if (e.key === '2') selectDifficulty('medium');
     if (e.key === '3') selectDifficulty('hard');
-    if (e.key === 'k' || e.key === 'K') markKnown();
-    if (e.key === 'd' || e.key === 'D') markUnknown();
+    if (e.code === 'KeyK') markKnown();
+    if (e.code === 'KeyD') markUnknown();
     if (e.key === 'Escape' && STATE.currentChapter !== null) goBack();
     }
     if (smartActive) {
@@ -120,8 +120,8 @@ function initFlashcard() {
       if (e.key === '1') smartSelect('easy');
       if (e.key === '2') smartSelect('medium');
       if (e.key === '3') smartSelect('hard');
-      if (e.key === 'k' || e.key === 'K') smartMark('known');
-      if (e.key === 'd' || e.key === 'D') smartMark('unknown');
+      if (e.code === 'KeyK') smartMark('known');
+      if (e.code === 'KeyD') smartMark('unknown');
     }
     if (document.getElementById('tab-quiz').classList.contains('active')) {
       if (e.key === 'Enter' && !STATE.quizAnswered && document.getElementById('quiz-view').style.display !== 'none') {

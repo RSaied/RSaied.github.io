@@ -1046,10 +1046,14 @@ body {
 }
 
 .keyboard-hint {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
   margin-top: 10px;
   color: var(--text-muted);
   font-size: 0.7rem;
+  flex-wrap: wrap;
 }
 
 .completion-extra {
