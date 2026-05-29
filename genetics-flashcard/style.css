@@ -912,13 +912,9 @@ body {
   gap: 6px;
   padding: 10px 0;
   overflow-x: auto;
-  overflow-y: hidden;
   flex-shrink: 0;
   direction: rtl;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
 }
-.nav-tabs::-webkit-scrollbar { display: none; }
 
 .nav-tab {
   flex-shrink: 0;
