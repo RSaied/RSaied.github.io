@@ -155,11 +155,11 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Multiple alleles",
-                          "ar":  "األالئل المتعددة"
+                          "ar":  "الألائل المتعددة"
                       },
                       {
                           "en":  "Adenosine deaminase gene",
-                          "ar":  "الجين المرمزة لنازعة أمين األدينوزين"
+                          "ar":  "الجين المرمزة لنازعة أمين الأدينوزين"
                       },
                       {
                           "en":  "Huntington disease",
@@ -247,7 +247,7 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Neurofibromatosis type1",
-                          "ar":  "الورام الليفي العصبي النمط األول"
+                          "ar":  "الورام الليفي العصبي النمط الأول"
                       },
                       {
                           "en":  "Tuberous sclerosis",
@@ -287,7 +287,7 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Gaucher disease type 1",
-                          "ar":  "داء غوشيه النمط األول"
+                          "ar":  "داء غوشيه النمط الأول"
                       },
                       {
                           "en":  "Friedreich ataxia",
@@ -573,7 +573,7 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Myoclonus epilepsy and ragged red fibers",
-                          "ar":  "اعتالل الصرع الرمعي العضلي واأللياف"
+                          "ar":  "اعتالل الصرع الرمعي العضلي والألياف"
                       },
                       {
                           "en":  "Ataxia",
@@ -581,7 +581,7 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Degeneration of spinal",
-                          "ar":  "تنكس في األعصاب النخاعية"
+                          "ar":  "تنكس في الأعصاب النخاعية"
                       },
                       {
                           "en":  "Leber optic neuropathy / LHON",
@@ -613,7 +613,7 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Adenine",
-                          "ar":  "األدنين"
+                          "ar":  "الأدنين"
                       },
                       {
                           "en":  "Guanine",
@@ -677,11 +677,11 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Complementary base pairs",
-                          "ar":  "أزواج األسس المتتامة"
+                          "ar":  "أزواج الأسس المتتامة"
                       },
                       {
                           "en":  "Base pair (bp)",
-                          "ar":  "شفع من األسس"
+                          "ar":  "شفع من الأسس"
                       },
                       {
                           "en":  "kilo base (kb)",
@@ -701,7 +701,7 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Acetylation",
-                          "ar":  "األستلة"
+                          "ar":  "الأستلة"
                       },
                       {
                           "en":  "Phosphorylation",
@@ -1029,7 +1029,7 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Primary transcript",
-                          "ar":  "المنتسخ األولي"
+                          "ar":  "المنتسخ الأولي"
                       },
                       {
                           "en":  "Primary mRNA",
@@ -1109,7 +1109,7 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Multimeric",
-                          "ar":  "متعدد األجزاء"
+                          "ar":  "متعدد الأجزاء"
                       },
                       {
                           "en":  "Subunits",
@@ -1117,7 +1117,7 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Holoenzyme",
-                          "ar":  "مجمل األنزيم"
+                          "ar":  "مجمل الأنزيم"
                       },
                       {
                           "en":  "Ribonucleotides",
@@ -1249,7 +1249,7 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Deaminase",
-                          "ar":  "إزالة األمين"
+                          "ar":  "إزالة الأمين"
                       },
                       {
                           "en":  "Intervening Sequences",
@@ -1657,7 +1657,7 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Glutamine synthase",
-                          "ar":  "األنزيم المصنع للغلوتامين"
+                          "ar":  "الأنزيم المصنع للغلوتامين"
                       },
                       {
                           "en":  "Splicing",
@@ -1801,11 +1801,11 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Micro RNAs (MIRNAs)",
-                          "ar":  "جزيئات الرنا األصغري"
+                          "ar":  "جزيئات الرنا الأصغري"
                       },
                       {
                           "en":  "Dicer enzymes",
-                          "ar":  "األنزيمات الشاطرة"
+                          "ar":  "الأنزيمات الشاطرة"
                       },
                       {
                           "en":  "RNA – induced silencing complex (RISC)",
@@ -2091,7 +2091,7 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Heterozygote",
-                          "ar":  "متخالف األالئل"
+                          "ar":  "متخالف الألائل"
                       },
                       {
                           "en":  "Mismatch",
@@ -2317,11 +2317,11 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Homozygous",
-                          "ar":  "متماثل األ"
+                          "ar":  "متماثل الألائل"
                       },
                       {
                           "en":  "Heterozygous",
-                          "ar":  "متخالف األ الئل"
+                          "ar":  "متخالف الألائل"
                       }
                   ]
     },
@@ -2363,7 +2363,7 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Flat Nasal Bridge",
-                          "ar":  "جسر األنف المسطح"
+                          "ar":  "جسر الأنف المسطح"
                       },
                       {
                           "en":  "Microcephaly",
@@ -2391,7 +2391,7 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Ventricular and Atrial Septal defect",
-                          "ar":  "العيوب في الحاجز البطيني واألذيني"
+                          "ar":  "العيوب في الحاجز البطيني والأذيني"
                       },
                       {
                           "en":  "Genitourinary Defect",
@@ -2407,7 +2407,7 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Polydactyly",
-                          "ar":  "كثرة األصابع"
+                          "ar":  "كثرة الأصابع"
                       },
                       {
                           "en":  "Cleft lip/palate",
@@ -2597,7 +2597,7 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Dermatoglyphics",
-                          "ar":  "بصمة األصابع"
+                          "ar":  "بصمة الأصابع"
                       },
                       {
                           "en":  "Genetic Heterogeneity",
@@ -2889,7 +2889,7 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Retinoblastoma",
-                          "ar":  "الورم األرومي الشبكي"
+                          "ar":  "الورم الأرومي الشبكي"
                       },
                       {
                           "en":  "De novo",
@@ -2897,7 +2897,7 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "LOH",
-                          "ar":  "فقدان في تخالفية األالئل"
+                          "ar":  "فقدان في تخالفية الألائل"
                       },
                       {
                           "en":  "Adenomatous Polyposis Coli",
@@ -3131,7 +3131,7 @@ const TERMS_DATA = [
                       },
                       {
                           "en":  "Slow acetylators",
-                          "ar":  "مركبات األستلة البطيئة"
+                          "ar":  "مركبات الأستلة البطيئة"
                       }
                   ]
     }
