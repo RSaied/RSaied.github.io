@@ -11,7 +11,7 @@
   --progress-bg: rgba(255, 255, 255, 0.1);
   --accent-1: #7c3aed;
   --accent-2: #a78bfa;
-  --accent-3: #f59e0b;
+  --accent-3: #8b5cf6;
   --accent-gold: #fbbf24;
   --text-primary: #f1f5f9;
   --text-secondary: rgba(241, 245, 249, 0.7);
@@ -38,7 +38,7 @@
   --progress-bg: rgba(0, 0, 0, 0.1);
   --accent-1: #6d28d9;
   --accent-2: #7c3aed;
-  --accent-3: #d97706;
+  --accent-3: #5b21b6;
   --accent-gold: #b45309;
   --text-primary: #1e293b;
   --text-secondary: rgba(30, 41, 59, 0.7);
@@ -920,7 +920,7 @@ body {
   flex-shrink: 0;
   padding: 10px 18px;
   border-radius: 50px;
-  border: 1px solid transparent;
+  border: none;
   background: rgba(255, 255, 255, 0.05);
   color: var(--text-secondary);
   cursor: pointer;
@@ -936,8 +936,7 @@ body {
 }
 
 .nav-tab.active {
-  background: rgba(124, 58, 237, 0.25);
-  border-color: var(--accent-1);
+  background: rgba(124, 58, 237, 0.15);
   color: var(--text-primary);
 }
 
@@ -949,20 +948,20 @@ body {
 [data-theme="sepia"] .nav-tab:hover {
   background: rgba(0, 0, 0, 0.1);
 }
-[data-theme="day"] .nav-tab.active {
-  background: rgba(109, 40, 217, 0.25);
-}
-[data-theme="sepia"] .nav-tab.active {
-  background: rgba(196, 122, 46, 0.25);
-}
 [data-theme="pink"] .nav-tab.active {
-  background: rgba(236, 72, 153, 0.25);
+  background: rgba(236, 72, 153, 0.12);
 }
 [data-theme="blue"] .nav-tab.active {
-  background: rgba(59, 130, 246, 0.25);
+  background: rgba(59, 130, 246, 0.12);
 }
 [data-theme="green"] .nav-tab.active {
-  background: rgba(22, 163, 74, 0.25);
+  background: rgba(22, 163, 74, 0.12);
+}
+[data-theme="sepia"] .nav-tab.active {
+  background: rgba(196, 122, 46, 0.15);
+}
+[data-theme="day"] .nav-tab.active {
+  background: rgba(109, 40, 217, 0.1);
 }
 
 /* ============ TAB CONTENT ============ */
@@ -1377,7 +1376,7 @@ body {
 .stats-card-value {
   font-size: 1.8rem;
   font-weight: 800;
-  color: var(--accent-gold);
+  color: var(--accent-2);
 }
 
 .stats-card-label {
@@ -1400,7 +1399,7 @@ body {
   transform: translate(-50%, -50%);
   font-size: 1.8rem;
   font-weight: 800;
-  color: var(--accent-gold);
+  color: var(--accent-2);
 }
 
 .stats-chapters {
