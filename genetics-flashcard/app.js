@@ -19,7 +19,7 @@ const STATE = {
 
 const STORAGE_KEY = 'genetics_flashcard_progress';
 const SESSION_KEY = 'genetics_flashcard_session';
-const APP_VERSION = '1.0.5';
+const APP_VERSION = '1.0.6';
 
 // ============================================================
 // LOCAL STORAGE
@@ -747,6 +747,33 @@ function setTheme(theme) {
   document.querySelectorAll('.theme-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.theme === theme);
   });
+  const palettes = {
+    night: { theme: '#7c3aed', bg: '#0f0c29' },
+    day: { theme: '#6d28d9', bg: '#f8fafc' },
+    pink: { theme: '#ec4899', bg: '#1a0a14' },
+    blue: { theme: '#3b82f6', bg: '#0a1628' },
+    green: { theme: '#16a34a', bg: '#0a1a0f' },
+    sepia: { theme: '#c47a2e', bg: '#f5e6c8' },
+  };
+  const p = palettes[theme] || palettes.night;
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.content = p.theme;
+  const link = document.getElementById('manifest-link');
+  if (link && location.protocol !== 'file:') {
+    const manifest = {
+      name: 'بطاقات الوراثة الطبية',
+      short_name: 'بطاقات الوراثة الطبية',
+      version: APP_VERSION,
+      description: 'بطاقات الوراثة الطبية - الإصدار ' + APP_VERSION + ' by ssss.sy',
+      start_url: './?v=' + APP_VERSION,
+      display: 'standalone',
+      background_color: p.bg,
+      theme_color: p.theme,
+      icons: [{ src: 'favicon.svg', sizes: 'any', type: 'image/svg+xml' }],
+    };
+    const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+    link.href = URL.createObjectURL(blob);
+  }
 }
 
 function toggleSettings() {
